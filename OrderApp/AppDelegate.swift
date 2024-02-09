@@ -1,8 +1,6 @@
-//
 //  AppDelegate.swift
 //  OrderApp
-//
-//  Created by Denis Azarkov on 9/2/24.
+//  Created by .b[u]mpagram on 9/2/24.
 //
 
 import UIKit
