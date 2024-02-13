@@ -6,39 +6,70 @@
 import UIKit
 
 class CategoryTableViewController: UITableViewController {
+    
+    let menuController = MenuController()
+    var categories = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        Task {
+            do {
+                let fetchedCategories = try await menuController.fetchCategories()
+                updateUI(with: fetchedCategories)
+            } catch {
+                displayError(error, title: "Failed to fetch categories")
+            }
+        }
+        
+    } //viewDidLoad end
+    
+    
+    func updateUI(with newdata: [String]) {
+        categories = newdata
+        tableView.reloadData()
     }
-
+    
+    func displayError(_ this: Error, title: String) {
+        guard let _ = viewIfLoaded?.window else { return }  // “a check to make sure that the view associated with the TableViewController is currently in a window. This way you don't try to post an alert on a view that is not visible. Without this check, the alert would not be shown but you would see a warning in the console.”
+        let alert = UIAlertController(title: title, message: this.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
+    
+    
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        categories.count
     }
-
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Category", for: indexPath)
+        
+        let item = categories[indexPath.row]
+        var content = cell.defaultContentConfiguration()
+        content.text = item.capitalized  // положили в title полученный с джейсона элемент
+        cell.contentConfiguration = content
         return cell
     }
-    */
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
