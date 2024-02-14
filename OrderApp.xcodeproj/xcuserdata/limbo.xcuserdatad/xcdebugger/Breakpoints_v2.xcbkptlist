@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "AF848E77-6B8A-4F74-80AE-E4D55272A022"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6D777BF3-E2E5-482E-9D1D-4E317ACECC29"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MenuTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6D777BF3-E2E5-482E-9D1D-4E317ACECC29 - 8f2740c54803dca0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in OrderApp.MenuTableViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "OrderApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/limbo/Documents/Dev/petProjects%20for%20Apple%20Swift/OrderApp/MenuTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "428">
+               </Location>
+               <Location
+                  uuid = "6D777BF3-E2E5-482E-9D1D-4E317ACECC29 - ddc965f615fca31a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for closure #1 @Sendable () async -&gt; () in OrderApp.MenuTableViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "OrderApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/limbo/Documents/Dev/petProjects%20for%20Apple%20Swift/OrderApp/MenuTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "6D777BF3-E2E5-482E-9D1D-4E317ACECC29 - f8546507a5bf708e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in OrderApp.MenuTableViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "OrderApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/limbo/Documents/Dev/petProjects%20for%20Apple%20Swift/OrderApp/MenuTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  uuid = "6D777BF3-E2E5-482E-9D1D-4E317ACECC29 - af0c94e88f08a687"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for closure #1 @Sendable () async -&gt; () in OrderApp.MenuTableViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "OrderApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/limbo/Documents/Dev/petProjects%20for%20Apple%20Swift/OrderApp/MenuTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "80">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

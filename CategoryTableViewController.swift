@@ -1,7 +1,6 @@
 //  CategoryTableViewController.swift
 //  OrderApp
 //  Created by .b[u]mpagram on 9/2/24.
-//
 
 import UIKit
 
@@ -12,11 +11,6 @@ class CategoryTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         Task {
             do {
@@ -43,6 +37,13 @@ class CategoryTableViewController: UITableViewController {
     }
     
     
+    @IBSegueAction func showMenu(_ coder: NSCoder, sender: Any?) -> MenuTableViewController? {
+        guard let cell = sender as? UITableViewCell, let indexpath = tableView.indexPath(for: cell) else { return nil }
+        
+        let category = categories[indexpath.row]   // достучались до нажатого элемента, нашли в массиве его
+        
+        return MenuTableViewController(coder: coder, category: category)  // использую свой кастомный инициализатор, чтобы создать новый контроллер с уже заданным проперти и данными в нем
+    }
     
     
     // MARK: - Table view data source
