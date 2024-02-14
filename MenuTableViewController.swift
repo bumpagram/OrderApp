@@ -24,13 +24,9 @@ class MenuTableViewController: UITableViewController {
         title = category.capitalized
         
         Task {
-            print("start task")
             do {
-                print("start do")
-                let fetchedMenuItems = try await menuController.fetchMenuItems(for: category)     // НЕ РАБОТАЕТ
-               // let fetchedcategoriesTest = try await menuController.fetchCategories()    // РАБОТАЕТ
+                let fetchedMenuItems = try await menuController.fetchMenuItems(for: category)
                 updateUI(with: fetchedMenuItems)
-                print("after FUNC : \(fetchedMenuItems)")
             } catch {
                 displayError(error, with: "Failed to fetch MenuItems")
                 print(error.localizedDescription)
