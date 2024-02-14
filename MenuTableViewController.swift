@@ -8,7 +8,6 @@ class MenuTableViewController: UITableViewController {
     
     let category: String
     var menuItems = [MenuItem]()  // вернется ответ от сервера и назначим сюда в проперти
-    let menuController = MenuController() // для сетевых запросов
     
     init?(coder: NSCoder, category: String) {
         self.category = category
@@ -25,7 +24,7 @@ class MenuTableViewController: UITableViewController {
         
         Task {
             do {
-                let fetchedMenuItems = try await menuController.fetchMenuItems(for: category)
+                let fetchedMenuItems = try await MenuController.shared.fetchMenuItems(for: category)
                 updateUI(with: fetchedMenuItems)
             } catch {
                 displayError(error, with: "Failed to fetch MenuItems")
@@ -46,6 +45,14 @@ class MenuTableViewController: UITableViewController {
         let alert = UIAlertController(title: title, message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
+    }
+    
+    
+    @IBSegueAction func showItemDetail(_ coder: NSCoder, sender: Any?) -> ItemDetailViewController? {
+        
+        guard let cell = sender as? UITableViewCell, let indexpath = tableView.indexPath(for: cell) else { return nil }
+        let tappedElement = menuItems[indexpath.row]
+        return ItemDetailViewController(coder: coder, menuItem: tappedElement)  // использую свой кастомный инициализатор, чтобы создать новый контроллер с уже заданным проперти и данными в нем
     }
     
     

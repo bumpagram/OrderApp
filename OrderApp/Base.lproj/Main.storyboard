@@ -82,7 +82,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="sZh-yP-CyG" kind="show" id="0i7-ov-MjB"/>
+                                    <segue destination="sZh-yP-CyG" kind="show" destinationCreationSelector="showItemDetail:sender:" id="0i7-ov-MjB"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

@@ -5,7 +5,10 @@
 import Foundation
 
 class MenuController {
+    
     typealias MinutesToPrepare = Int
+    
+    static let shared = MenuController() // синглтон, единая точка входа. Положили класс сам в себя, инициализировали. Можно вызыать через MenuController.shared для сетевых запросов
     
     let baseURL = URL(string: "http://localhost:8080/")!
     
