@@ -8,7 +8,7 @@ import Foundation
 // “The /menu endpoint returns an object with an items key that contains the MenuItem objects you're interested in. This response model can be defined as:
 
 struct MenuResponse: Codable {
-    let menuItems: [MenuItem]
+    let items: [MenuItem]
 }
 
 

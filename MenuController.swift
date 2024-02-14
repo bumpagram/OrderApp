@@ -9,7 +9,6 @@ class MenuController {
     
     let baseURL = URL(string: "http://localhost:8080/")!
     
-    
     func fetchCategories() async throws -> [String] { // get
         let categoriesURL = baseURL.appendingPathComponent("categories")
         let (data, response) = try await URLSession.shared.data(from: categoriesURL)
@@ -41,7 +40,7 @@ class MenuController {
         let jsondecoder = JSONDecoder()
         let menuResponse = try jsondecoder.decode(MenuResponse.self, from: data)
         
-        return menuResponse.menuItems
+        return menuResponse.items
     }
     
     

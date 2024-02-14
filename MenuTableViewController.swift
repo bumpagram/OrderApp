@@ -29,8 +29,8 @@ class MenuTableViewController: UITableViewController {
                 print("start do")
                 let fetchedMenuItems = try await menuController.fetchMenuItems(for: category)     // НЕ РАБОТАЕТ
                // let fetchedcategoriesTest = try await menuController.fetchCategories()    // РАБОТАЕТ
-                //updateUI(with: fetchedMenuItems)
-                print("after FUNC")
+                updateUI(with: fetchedMenuItems)
+                print("after FUNC : \(fetchedMenuItems)")
             } catch {
                 displayError(error, with: "Failed to fetch MenuItems")
                 print(error.localizedDescription)
@@ -70,7 +70,7 @@ class MenuTableViewController: UITableViewController {
         var content = cell.defaultContentConfiguration()
         let item = menuItems[indexPath.row]
         content.text = item.name
-        content.secondaryText = "$ \(item.price)"
+        content.secondaryText = item.price.formatted(.currency(code: "usd"))  // как обычный String6 но чтобы 2 нуля после точки было
         cell.contentConfiguration = content
         return cell
     }
