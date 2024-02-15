@@ -6,33 +6,35 @@ import UIKit
 
 class OrderTableViewController: UITableViewController {
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        NotificationCenter.default.addObserver(tableView!, selector: #selector(UITableView.reloadData), name: MenuController.orderUpdatedNotification, object: nil)
+        //  “Now you'll create an observer for your new notification in OrderTableViewController. Add the notification observation code to your viewDidLoad() method. When the order is updated, you'll reload the table view, so the observer will be the view controller's tableView property. Specify the reloadData() method of UITableView as the selector, and set the last argument to nil again.
     }
     
     
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        MenuController.shared.order.userSelected.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Order", for: indexPath)
         // Configure the cell...
-
+        var content = cell.defaultContentConfiguration()
+        let item = MenuController.shared.order.userSelected[indexPath.row]
+        content.text = item.name
+        content.secondaryText = item.price.formatted(.currency(code: "usd"))
+        cell.contentConfiguration = content
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

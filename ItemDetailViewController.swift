@@ -38,7 +38,7 @@ class ItemDetailViewController: UIViewController {
             self.addToOrderButton.transform = CGAffineTransform(scaleX: 2, y: 2)
             self.addToOrderButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         }
-        
+        MenuController.shared.order.userSelected.append(menuItem)  // добавляем в корзину при нажатии кнопки, захват свойства
     }
     
     func updateUI() {

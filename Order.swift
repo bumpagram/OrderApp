@@ -7,11 +7,11 @@ import Foundation
 
 struct Order: Codable {
     
-    let userSelected : [MenuItem]
+    var userSelected : [MenuItem]
     
-    // хз зачем этот инициализатор в учебнике, должно и без него работать
-//    init(userSelected: [MenuItem] = []) {
-//            self.userSelected = userSelected
-//        }
+    init(userSelected: [MenuItem] = []) {
+        // чтобы можно было инициализировать пустой массив и положить структуру в проперти в другом файле
+            self.userSelected = userSelected
+        }
     
 }
