@@ -51,7 +51,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     @objc func updateOrderBadge() {
         // “To use updateOrderBadge() as a selector in your call to addObserver(_:selector:name:object:), you'll need to annotate the function with @objc.
-        orderTabBarItem.badgeValue = String(MenuController.shared.order.userSelected.count)
+        switch MenuController.shared.order.userSelected.count {
+        case 0 : orderTabBarItem.badgeValue = nil
+        case let others: orderTabBarItem.badgeValue = String(others)
+        }
     }
 
 
