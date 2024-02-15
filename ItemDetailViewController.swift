@@ -7,7 +7,13 @@ import UIKit
 
 class ItemDetailViewController: UIViewController {
     
-    var menuItem : MenuItem
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var priceLabel: UILabel!
+    @IBOutlet var detailLabel: UILabel!
+    @IBOutlet var addToOrderButton: UIButton!
+    
+    var menuItem : MenuItem  // в это свойство пробросится элемент при переходе из MenuTVC по IBSegueAction
     
     init?(coder: NSCoder, menuItem: MenuItem) {
         self.menuItem = menuItem
@@ -20,11 +26,29 @@ class ItemDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        updateUI()
+        
+        
     }
     
-
+    
+    @IBAction func orderButtonPressed(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.1) {
+            // обратная связь для пользователя на CoreAnimation (to see it bounce a little)
+            self.addToOrderButton.transform = CGAffineTransform(scaleX: 2, y: 2)
+            self.addToOrderButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }
+        
+    }
+    
+    func updateUI() {
+        nameLabel.text = menuItem.name
+        priceLabel.text = menuItem.price.formatted(.currency(code: "usd"))
+        detailLabel.text = menuItem.detailText
+        // imageView.image = menuItem.imageURL    НАДО ДОДЕЛАТЬ
+    }
+    
+    
     /*
     // MARK: - Navigation
 
