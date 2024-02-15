@@ -8,13 +8,17 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var orderTabBarItem : UITabBarItem!  // будет нужен для Badge с цифрой в заказе
+    
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateOrderBadge), name: MenuController.orderUpdatedNotification, object: nil)    // to set the property when the app first launches and observe the orderUpdateNotification
+        orderTabBarItem = (window?.rootViewController as? UITabBarController)?.viewControllers?[1].tabBarItem   // опциональная цепочка.  даункаст, потом свойство-массив всех таббар контроллеров по горизонтали, и его бейджик item.
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -43,6 +47,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+    }
+    
+    @objc func updateOrderBadge() {
+        // “To use updateOrderBadge() as a selector in your call to addObserver(_:selector:name:object:), you'll need to annotate the function with @objc.
+        orderTabBarItem.badgeValue = String(MenuController.shared.order.userSelected.count)
     }
 
 
