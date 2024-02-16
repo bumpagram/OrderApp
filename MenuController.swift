@@ -55,7 +55,7 @@ class MenuController {
     }
     
     
-    func sumbitOrder(for menuIDs: [Int] ) async throws -> MinutesToPrepare {   // POST to /order
+    func sumbitOrder(for menuIds: [Int] ) async throws -> MinutesToPrepare {   // POST to /order
         
         let orderURL = baseURL.appendingPathComponent("order")
         // “However, the POST request for placing the order is different. First, you'll create a URLRequest to specify the details of the request rather than directly submitting the request with a URL. You'll need to modify the request's type, which defaults to GET, to a POST. Then, you'll tell the server you'll be sending JSON data.
@@ -65,7 +65,7 @@ class MenuController {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         // “Next, you'll store the array of menu IDs in JSON under the key menuIds. To do this, create a dictionary of type [String: [Int]], a type that can be converted to or from JSON by an instance of JSONEncoder”
-        let menuIDsDictionary = ["menuIDs" : menuIDs ]
+        let menuIDsDictionary = ["menuIds" : menuIds ]
         let jsonencoder = JSONEncoder()
         let jsondata = try jsonencoder.encode(menuIDsDictionary)
         request.httpBody = jsondata
