@@ -220,6 +220,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="submitButton" destination="pnZ-jR-8Ct" id="DCZ-CC-ePN"/>
                         <segue destination="K6u-IF-5hV" kind="presentation" identifier="confirmOrder" destinationCreationSelector="confirmOrder:sender:" id="97d-Dn-CdR"/>
                     </connections>
                 </tableViewController>
@@ -261,7 +262,7 @@
                             <constraint firstItem="ixm-CJ-jOV" firstAttribute="bottom" secondItem="s4C-5b-jK6" secondAttribute="bottom" constant="70" id="Cc8-TY-8S0"/>
                             <constraint firstItem="bgg-4D-LYc" firstAttribute="leading" secondItem="ixm-CJ-jOV" secondAttribute="leading" constant="15" id="Nbl-Ry-fhc"/>
                             <constraint firstItem="bgg-4D-LYc" firstAttribute="centerX" secondItem="raO-Pl-916" secondAttribute="centerX" id="bQ2-KN-mQu"/>
-                            <constraint firstItem="ixm-CJ-jOV" firstAttribute="trailing" secondItem="bgg-4D-LYc" secondAttribute="trailing" constant="15" id="mDd-Jf-bqX"/>
+                            <constraint firstItem="ixm-CJ-jOV" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bgg-4D-LYc" secondAttribute="trailing" id="mDd-Jf-bqX"/>
                             <constraint firstItem="bgg-4D-LYc" firstAttribute="centerY" secondItem="raO-Pl-916" secondAttribute="centerY" id="wtY-00-kcP"/>
                         </constraints>
                     </view>

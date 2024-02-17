@@ -8,13 +8,21 @@ class OrderTableViewController: UITableViewController {
     //  свойство инициализировано нулевое, но получим ответ от сервера и обновим значение. Затем передадим в инициализатор OrderConfirmation VC
     var preparationTime = 0
     
+    @IBOutlet var submitButton: UIBarButtonItem!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
+        updateButtonsOfOrderlist()
         
         NotificationCenter.default.addObserver(tableView!, selector: #selector(UITableView.reloadData), name: MenuController.orderUpdatedNotification, object: nil)
         //  “Now you'll create an observer for your new notification in OrderTableViewController. Add the notification observation code to your viewDidLoad() method. When the order is updated, you'll reload the table view, so the observer will be the view controller's tableView property. Specify the reloadData() method of UITableView as the selector, and set the last argument to nil again.
+        
+        NotificationCenter.default.addObserver(forName: MenuController.orderUpdatedNotification, object: nil, queue: .main) { notification in
+            // наблюдатель прослушивает эфир и вызывает замыкание при получении события updateButtonsOfOrderlist
+            self.updateButtonsOfOrderlist()
+        }
     }
     
     
@@ -24,8 +32,9 @@ class OrderTableViewController: UITableViewController {
     
     @IBAction func unwindToOrderList(segue: UIStoryboardSegue) {
         // “First, you'll need to define a method in OrderTableViewController that will be called when the unwind is triggered.” “Control-drag from the Dismiss button to the Exit button at the top of OrderConfirmationViewController and select the name of the method you just created. This will create an unwind segue. Using the Attributes inspector, give the segue an identifier of “dismissConfirmation.”
-        
-        
+        if segue.identifier == "dismissConfirmation" {
+            MenuController.shared.order.userSelected.removeAll()   // очищаем корзину после отправки заказа на сервер и закрытия окна через кнопку
+        }
     }
     
     @IBAction func submitTapped(_ sender: Any) {
@@ -61,7 +70,6 @@ class OrderTableViewController: UITableViewController {
         }
     }
     
-    
     func displayError(_ error: Error, with title: String) {
         guard let _ = viewIfLoaded?.window else { return }
         
@@ -69,7 +77,19 @@ class OrderTableViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
-
+    
+    func updateButtonsOfOrderlist() {
+        // написал функцию для контроля вкл/выкл кнопки по тому же самому наблюдателю orderUpdatedNotification
+        if MenuController.shared.order.userSelected.isEmpty {
+            navigationItem.leftBarButtonItem?.isEnabled = false
+            submitButton.isEnabled = false
+        } else {
+            navigationItem.leftBarButtonItem?.isEnabled = true
+            submitButton.isEnabled = true
+        }
+    }
+    
+    
     /*
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         // determines whether the segue with the specified identifier should be performed

@@ -5,7 +5,8 @@
 
 import UIKit
 
-class OrderConfirmationViewController: UIViewController {
+class OrderConfirmationViewController: UIViewController, UIAdaptivePresentationControllerDelegate {
+    // UIAdaptivePresentationControllerDelegate протокол содержит методы, которые определяют как реагировать на закрытие окна свайпом
     
     typealias MinutesToPrepare = Int
     var preparationTime: MinutesToPrepare
@@ -24,11 +25,17 @@ class OrderConfirmationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        isModalInPresentation = true
         confirmationLabel.text = "Thank you for your order! Approximately wait time is \(preparationTime) minutes."
     }
     
     
+    // IBAction для кнопки отсутствует, тк в Storyboad Main сделал ctrl-drag -> exit на unwindToOrderList
     
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        // не будет вызван, если мы просто закроем окно свайпом вниз. Вызов данного метода происходит только в том случае, когда свойство isModalInPresentation класса UIViewController имеет значение true. Данное свойство указывает, применяет ли вью контроллер модальное поведение или нет. Если да, то закрыть окно свайпом вниз не получится
+        // пробовал добавлять сюда код, почему то не исполняется, но само наличие метода работает - модальное окно не смахнуть вниз
+    }
     
     /*
     // MARK: - Navigation
@@ -39,5 +46,4 @@ class OrderConfirmationViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }

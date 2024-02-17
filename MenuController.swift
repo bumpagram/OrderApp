@@ -14,6 +14,7 @@ class MenuController {
             // “When should you send this notification? The easiest solution is to observe changes to the order property. That way, whenever it's modified, all observers will have a chance to react. Sending a notification is as simple as specifying a name and an object. The object parameter is a way for observers to filter notifications if they arrive in different contexts or from different sources. But since this is a simple implementation, you can set the object parameter to nil.
         }
     }
+    
     let baseURL = URL(string: "http://localhost:8080/")!
     
     static let shared = MenuController() // синглтон, единая точка входа. Положили класс сам в себя, инициализировали. Можно вызыать через MenuController.shared для сетевых запросов
