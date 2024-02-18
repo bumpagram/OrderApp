@@ -114,6 +114,7 @@ class OrderTableViewController: UITableViewController {
         let item = MenuController.shared.order.userSelected[indexPath.row]
         content.text = item.name
         content.secondaryText = item.price.formatted(.currency(code: "usd"))
+        content.image = UIImage(systemName: "photo.on.rectangle")
         cell.contentConfiguration = content
         return cell
     }

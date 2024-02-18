@@ -74,6 +74,7 @@ class MenuTableViewController: UITableViewController {
         let item = menuItems[indexPath.row]
         content.text = item.name
         content.secondaryText = item.price.formatted(.currency(code: "usd"))  // как обычный String6 но чтобы 2 нуля после точки было
+        content.image = UIImage(systemName: "photo.on.rectangle")
         cell.contentConfiguration = content
         return cell
     }
