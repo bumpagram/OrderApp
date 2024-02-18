@@ -3,6 +3,7 @@
 //  Created by .b[u]mpagram on 10/2/24.
 
 import Foundation
+import UIKit
 
 class MenuController {
     
@@ -81,6 +82,19 @@ class MenuController {
         return orderResponse.preparaionTime
     }
     
+    
+    func fetchImage(from url: URL) async throws -> UIImage {
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard let httpresponse = response as? HTTPURLResponse, httpresponse.statusCode == 200 else {
+            throw MenuControllerError.imageDataMissing
+        }
+        guard let image = UIImage(data: data) else {
+            throw MenuControllerError.imageDataMissing
+        }
+        return image
+    }
+    
+    
 } // MenuControler end
 
 
@@ -89,4 +103,5 @@ enum MenuControllerError: Error, LocalizedError {
     case categoriesNotFound
     case menuItemsNotFound
     case orderRequestFailed
+    case imageDataMissing
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5A45C3B52B77789D00431658 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A45C3B42B77789D00431658 /* MenuController.swift */; };
+		5AAF6CDB2B8296F0006A0C03 /* MenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAF6CDA2B8296F0006A0C03 /* MenuItemCell.swift */; };
 		5ACF9F9F2B7EAEC100239524 /* OrderConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF9F9E2B7EAEC100239524 /* OrderConfirmationViewController.swift */; };
 		5AEAC0E02B7D0BEE00B60FCB /* Open Restaurant.app in Resources */ = {isa = PBXBuildFile; fileRef = 5AEAC0DF2B7D0BEE00B60FCB /* Open Restaurant.app */; };
 		5AFB2A972B7689AB00E149F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFB2A962B7689AB00E149F8 /* AppDelegate.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		5A45C3B42B77789D00431658 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
+		5AAF6CDA2B8296F0006A0C03 /* MenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemCell.swift; sourceTree = "<group>"; };
 		5ACF9F9E2B7EAEC100239524 /* OrderConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderConfirmationViewController.swift; sourceTree = "<group>"; };
 		5AEAC0DF2B7D0BEE00B60FCB /* Open Restaurant.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = "Open Restaurant.app"; path = "resourses/Open Restaurant.app"; sourceTree = "<group>"; };
 		5AEAC0E12B7D0CC600B60FCB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 		5AFB2A8A2B7689AB00E149F8 = {
 			isa = PBXGroup;
 			children = (
+				5AAF6CDA2B8296F0006A0C03 /* MenuItemCell.swift */,
 				5ACF9F9E2B7EAEC100239524 /* OrderConfirmationViewController.swift */,
 				5AEAC0E12B7D0CC600B60FCB /* README.md */,
 				5AEAC0DF2B7D0BEE00B60FCB /* Open Restaurant.app */,
@@ -177,6 +180,7 @@
 				5AFB2AB12B76ADAE00E149F8 /* ItemDetailViewController.swift in Sources */,
 				5AFB2A972B7689AB00E149F8 /* AppDelegate.swift in Sources */,
 				5AFB2A992B7689AB00E149F8 /* SceneDelegate.swift in Sources */,
+				5AAF6CDB2B8296F0006A0C03 /* MenuItemCell.swift in Sources */,
 				5ACF9F9F2B7EAEC100239524 /* OrderConfirmationViewController.swift in Sources */,
 				5AFB2AAB2B76AA2D00E149F8 /* CategoryTableViewController.swift in Sources */,
 			);

@@ -8,6 +8,7 @@ class MenuTableViewController: UITableViewController {
     
     let category: String
     var menuItems = [MenuItem]()  // вернется ответ от сервера и назначим сюда в проперти
+    var imageLoadTasks: [IndexPath: Task<Void, Never>] = [:]  // “ keep track of any image loading task for an IndexPath and cancel that Task if the cell is scrolled off the screen.
     
     init?(coder: NSCoder, category: String) {
         self.category = category
@@ -67,22 +68,53 @@ class MenuTableViewController: UITableViewController {
          menuItems.count
     }
     
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuItem", for: indexPath)
         // Configure the cell...
+
         var content = cell.defaultContentConfiguration()
         let item = menuItems[indexPath.row]
         content.text = item.name
-        content.secondaryText = item.price.formatted(.currency(code: "usd"))  // как обычный String6 но чтобы 2 нуля после точки было
+        content.secondaryText = item.price.formatted(.currency(code: "usd"))  // как обычный String, но чтобы 2 нуля после точки было
         content.image = UIImage(systemName: "photo.on.rectangle")
         cell.contentConfiguration = content
-        return cell
-    }
+        
+        imageLoadTasks[indexPath] = Task {
+            // “While the image is nice to have, it's not worth alerting the user if it fails to load, so you'll ignore any errors that are thrown by using an optional try statement-try?-rather than a do/catch statement. In a real-world situation, you might choose to log the error somewhere. “But wait: For table view cells, you'll need to make an additional check. Recall that, in longer lists of data, cells will be recycled and reused as you scroll up and down the table. Since you don't want to put the wrong image into a recycled cell, check the index path where the cell is now located. If it's changed, you can skip setting the image view. The final step in the process is to update the cell's contentConfiguration, which will cause the cell to update its layout to accommodate the new image.
+         
+            if let fetchedImage = try? await MenuController.shared.fetchImage(from: item.imageURL) {
+                if let currentIndexPath = self.tableView.indexPath(for: cell), currentIndexPath == indexPath {
+                    var content = cell.defaultContentConfiguration()
+                    content.text = item.name
+                    content.secondaryText = item.price.formatted(.currency(code: "usd"))
+                    content.image = fetchedImage
+                    }
+                }
+            imageLoadTasks[indexPath] = nil  // обнуляем реестр отрабатыаюших сейчас тасков по загрузке картинок
+            }
+            return cell
+        }
+    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
+    // Delegate методы:
+    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // cancel the image fetching task if its no longer needed
+        imageLoadTasks[indexPath]?.cancel()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        // “The entire view can also disappear before all the tasks finish loading the images. You should cancel any outstanding image loading tasks in the viewDidDisappear(:) method”
+        super.viewDidDisappear(true)
+        imageLoadTasks.forEach { key, value in
+            value.cancel()   // cancel image fetching tasks that are no longer needed
+        }
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
