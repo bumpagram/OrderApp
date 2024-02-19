@@ -7,6 +7,7 @@ import UIKit
 class OrderTableViewController: UITableViewController {
     //  свойство инициализировано нулевое, но получим ответ от сервера и обновим значение. Затем передадим в инициализатор OrderConfirmation VC
     var preparationTime = 0
+    var imageLoadTasks: [IndexPath: Task<Void, Never>] = [:]  // снова временный реестр для рендера картинок
     
     @IBOutlet var submitButton: UIBarButtonItem!
     
@@ -89,6 +90,23 @@ class OrderTableViewController: UITableViewController {
         }
     }
     
+    func configure(_ cell: UITableViewCell, forItemAt indexpath: IndexPath) {
+        guard let cell = cell as? MenuItemCell else { return }
+        let itemToShow = MenuController.shared.order.userSelected[indexpath.row]
+        cell.itemName = itemToShow.name
+        cell.price = itemToShow.price
+        cell.image = nil
+        
+        imageLoadTasks[indexpath] = Task {
+            if let fetchedImage = try? await MenuController.shared.fetchImage(from: itemToShow.imageURL) {
+                if let currentIndexpath = tableView.indexPath(for: cell), currentIndexpath == indexpath {
+                    cell.image = fetchedImage
+                }
+            }
+        imageLoadTasks[indexpath] = nil
+        } // end Task
+    }
+    
     
     /*
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -110,12 +128,7 @@ class OrderTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Order", for: indexPath)
         // Configure the cell...
-        var content = cell.defaultContentConfiguration()
-        let item = MenuController.shared.order.userSelected[indexPath.row]
-        content.text = item.name
-        content.secondaryText = item.price.formatted(.currency(code: "usd"))
-        content.image = UIImage(systemName: "photo.on.rectangle")
-        cell.contentConfiguration = content
+        configure(cell, forItemAt: indexPath)
         return cell
     }
     
@@ -136,6 +149,10 @@ class OrderTableViewController: UITableViewController {
         }
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
