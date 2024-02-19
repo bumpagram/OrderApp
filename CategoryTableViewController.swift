@@ -70,6 +70,12 @@ class CategoryTableViewController: UITableViewController {
     }
     
     
+    override func viewDidAppear(_ animated: Bool) {
+        // “for preserving view controller state is to call this method within each view controller at the appropriate time. The best time is when viewDidAppear(_:) is called. Add the following methods to each corresponding controller.
+        super.viewDidAppear(animated)
+        MenuController.shared.updateUserActivity(with: .categories)
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

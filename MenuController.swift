@@ -96,6 +96,16 @@ class MenuController {
         return image
     }
     
+    func updateUserActivity(with controller: StateRestorationController) {
+        switch controller {
+        case .menu(category: let somecategory): userActivity.menuCategory = somecategory
+        case .itemDetail(let someitem): userActivity.menuItem = someitem
+        case .order : break
+        case .categories : break
+        }
+        userActivity.controllerIdentifier = controller.identifier
+    }
+    
     
 } // MenuControler end
 
