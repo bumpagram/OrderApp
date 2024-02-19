@@ -48,6 +48,25 @@ class MenuTableViewController: UITableViewController {
         present(alert, animated: true)
     }
     
+    func configure(_ cell: UITableViewCell, forItemAt indexpath: IndexPath) {
+        guard let cell = cell as? MenuItemCell else { return }
+        let item = menuItems[indexpath.row]
+        cell.itemName = item.name
+        cell.price = item.price
+        cell.image = nil
+        
+        imageLoadTasks[indexpath] = Task {
+            // “While the image is nice to have, it's not worth alerting the user if it fails to load, so you'll ignore any errors that are thrown by using an optional try statement-try?-rather than a do/catch statement. In a real-world situation, you might choose to log the error somewhere. “But wait: For table view cells, you'll need to make an additional check. Recall that, in longer lists of data, cells will be recycled and reused as you scroll up and down the table. Since you don't want to put the wrong image into a recycled cell, check the index path where the cell is now located. If it's changed, you can skip setting the image view. The final step in the process is to update the cell's image property, which will cause the cell to update its layout to accommodate the new image.
+         
+            if let fetchedImage = try? await MenuController.shared.fetchImage(from: item.imageURL) {
+                if let currentIndexPath = self.tableView.indexPath(for: cell), currentIndexPath == indexpath {
+                    cell.image = fetchedImage  // изобржения большие, ресайзят таблицу, верстка плывет. чтобы такого не было не забываем ставить в Storyboard - tableView- max how height и estimatedRowHeight
+                    }
+                }
+            imageLoadTasks[indexpath] = nil  // обнуляем реестр отрабатыаюших сейчас тасков по загрузке картинок
+            }
+        
+    }
     
     @IBSegueAction func showItemDetail(_ coder: NSCoder, sender: Any?) -> ItemDetailViewController? {
         
@@ -57,7 +76,6 @@ class MenuTableViewController: UITableViewController {
     }
     
     
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -72,27 +90,7 @@ class MenuTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuItem", for: indexPath)
         // Configure the cell...
-
-        var content = cell.defaultContentConfiguration()
-        let item = menuItems[indexPath.row]
-        content.text = item.name
-        content.secondaryText = item.price.formatted(.currency(code: "usd"))  // как обычный String, но чтобы 2 нуля после точки было
-        content.image = UIImage(systemName: "photo.on.rectangle")
-        cell.contentConfiguration = content
-        
-        imageLoadTasks[indexPath] = Task {
-            // “While the image is nice to have, it's not worth alerting the user if it fails to load, so you'll ignore any errors that are thrown by using an optional try statement-try?-rather than a do/catch statement. In a real-world situation, you might choose to log the error somewhere. “But wait: For table view cells, you'll need to make an additional check. Recall that, in longer lists of data, cells will be recycled and reused as you scroll up and down the table. Since you don't want to put the wrong image into a recycled cell, check the index path where the cell is now located. If it's changed, you can skip setting the image view. The final step in the process is to update the cell's contentConfiguration, which will cause the cell to update its layout to accommodate the new image.
-         
-            if let fetchedImage = try? await MenuController.shared.fetchImage(from: item.imageURL) {
-                if let currentIndexPath = self.tableView.indexPath(for: cell), currentIndexPath == indexPath {
-                    var content = cell.defaultContentConfiguration()
-                    content.text = item.name
-                    content.secondaryText = item.price.formatted(.currency(code: "usd"))
-                    content.image = fetchedImage
-                    }
-                }
-            imageLoadTasks[indexPath] = nil  // обнуляем реестр отрабатыаюших сейчас тасков по загрузке картинок
-            }
+        configure(cell, forItemAt: indexPath)
             return cell
         }
     
