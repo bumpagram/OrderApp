@@ -14,7 +14,10 @@
    Цель упражнения: составить UI, сетевые запросы, распарсить джейсоны и вывести всё в таблицы. Затем реализовать поведение корзины с заказами. Она должна отправлять заказ пользователя на сервер в виде массива с [Int], где инты = Id поля элементов блюд.
     В отличие от остальных 2х GET запросов она отправит с клиента URLRequest на /order  типа POST.  в ответ от эмулированного сервера вернется response c кодом ответа и data с Int числом. это количество минут на приготовление заказа. 
    
-   
-   /// TodoList  ///
-
+ ---
+   // “Simulate State Restoration
+To properly test state restoration, launch your app and add an item to your order. Go back to the Home screen in Simulator, then stop the project from running with Xcode. (To give the app time to complete state preservation, you may need to wait a few beats before stopping the project.) Now relaunch your app from Xcode.
+”
+ ---  
+ 
 

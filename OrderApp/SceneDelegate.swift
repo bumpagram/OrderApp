@@ -65,14 +65,42 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return MenuController.shared.userActivity
     }
     
+    
     func scene(_ scene: UIScene, restoreInteractionStateWith stateRestorationActivity: NSUserActivity) {
         // “is called after your scene connects and the storyboard and views are loaded, but before the first transition to the foreground. ”
         // “check the provided NSUserActivity for an order. If an order is present, assign it to the MenuController's shared instance.
-    
         if let restoredOrder = stateRestorationActivity.order {
             MenuController.shared.order = restoredOrder
         }
-    }
+        
+        guard let restorationController = StateRestorationController(userActivity: stateRestorationActivity),
+              let tabBarController = window?.rootViewController as? UITabBarController, tabBarController.viewControllers?.count == 2,
+              let categoryTVC = (tabBarController.viewControllers?[0] as? UINavigationController)?.topViewController as? CategoryTableViewController   else {return}
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        switch restorationController {
+        case .categories : break  // is displayed by default
+        case .order : tabBarController.selectedIndex = 1  // для перехода в вкладку Your Order. “is already loaded in the second tab. You will not need to initialize them programmatically.”
+            
+        case .menu(let category):
+            let menuTVC = storyboard.instantiateViewController(identifier: restorationController.identifier.rawValue) { coder in
+                MenuTableViewController(coder: coder, category: category)
+            }
+            categoryTVC.navigationController?.pushViewController(menuTVC, animated: true)
+            
+        case .itemDetail(let menuItem):
+            let menuTVC = storyboard.instantiateViewController(identifier: StateRestorationController.Identifier.menu.rawValue) { coder in
+                MenuTableViewController(coder: coder, category: menuItem.category)
+            }
+            let itemDetailVC = storyboard.instantiateViewController(identifier: restorationController.identifier.rawValue) { coder in
+                ItemDetailViewController(coder: coder, menuItem: menuItem)
+            }
+            categoryTVC.navigationController?.pushViewController(menuTVC, animated: false)
+            categoryTVC.navigationController?.pushViewController(itemDetailVC, animated: false)
+        }
+        
+    }  // функция унаследована. Именно она в конечном счете переводит нас в нужный экран иерархии навигации NSUserActivity
     
 
 }

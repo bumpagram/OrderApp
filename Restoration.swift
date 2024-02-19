@@ -60,6 +60,7 @@ extension NSUserActivity {
 
 
 enum StateRestorationController {
+    
     enum Identifier : String {
         // “can be used to store an identifier for each controller”
         case categories, menu, itemDetail, order
@@ -79,6 +80,29 @@ enum StateRestorationController {
         case .order: return Identifier.order
         }
     }
+    
+    init?(userActivity: NSUserActivity) {
+        // “As you're aware, all that information can be neatly packaged in the StateRestorationController enum. It would be nice if you could initialize a value of StateRestorationController using a provided NSUserActivity. Add the following custom initializer to StateRestorationController in the Restoration file.
+        // “The initializer checks the userActivity for a controllerIdentifier—the last screen the user was on. Then, if one is present, the initializer switches over the value and extracts the relevant properties. Notice the assignment to self in each case; in failable enum initializers, you either assign self to a value or return nil.
+        guard let identifier = userActivity.controllerIdentifier else {return nil}
+        
+        switch identifier {
+        case .categories:
+            self = .categories
+            
+        case .menu:
+            if let activeCategory = userActivity.menuCategory { self = .menu(category: activeCategory) }
+            else {return nil}
+            
+        case .itemDetail:
+            if let shownMenuItem = userActivity.menuItem { self = .itemDetail(shownMenuItem) }
+            else {return nil}
+            
+        case .order:
+            self = .order
+        }
+    }
+    
 }
 
 
