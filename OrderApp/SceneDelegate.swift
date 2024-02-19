@@ -49,6 +49,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
     
+    
     @objc func updateOrderBadge() {
         // “To use updateOrderBadge() as a selector in your call to addObserver(_:selector:name:object:), you'll need to annotate the function with @objc.
         switch MenuController.shared.order.userSelected.count {
@@ -56,7 +57,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         case let others: orderTabBarItem.badgeValue = String(others)
         }
     }
-
+    
+    func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
+        // “is called when your scene enters the background; it is invoked by UIKit, which is requesting an NSUserActivity to pass back to you when your scene reconnects. ”
+        // “Note: If you do not first go to the Home screen, the stateRestorationActivity(for:) method will not be called, and you won't see proper state restoration. Keep this in mind while debugging your app's state restoration feature. Also, if your app crashes, the state restoration information may be thrown away; this helps ensure that the app does not continue crashing on re-launch due to a bad state.”
+        
+        return MenuController.shared.userActivity
+    }
+    
+    func scene(_ scene: UIScene, restoreInteractionStateWith stateRestorationActivity: NSUserActivity) {
+        // “is called after your scene connects and the storyboard and views are loaded, but before the first transition to the foreground. ”
+        // “check the provided NSUserActivity for an order. If an order is present, assign it to the MenuController's shared instance.
+    
+        if let restoredOrder = stateRestorationActivity.order {
+            MenuController.shared.order = restoredOrder
+        }
+    }
+    
 
 }
 

@@ -7,7 +7,7 @@ import Foundation
 
 struct Order: Codable {
     
-    var userSelected : [MenuItem]
+    var userSelected : [MenuItem]  // здесь храним массив элементов, которые юзер добавил в корзину
     
     init(userSelected: [MenuItem] = []) {
         // чтобы можно было инициализировать пустой массив и положить структуру в проперти в другом файле
